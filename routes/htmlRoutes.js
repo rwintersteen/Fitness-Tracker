@@ -1,20 +1,20 @@
 const path = require('path');
+const express = require('express');
+const router = express.Router();
 
-module.exports = function(app) {
-
-app.get('/exercise', (req, res) => {
+router.get('/exercise', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/exercise.html'));
     res.status(200);
 });
 
-app.get('/stats', (req, res) => {
+router.get('/stats', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/stats.html'));
     res.status(200);
 });
 
-app.get('/*', (req, res) => {
+router.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'));
     res.status(200);
 })
 
-};
+module.exports = router;
