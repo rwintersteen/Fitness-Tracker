@@ -1,17 +1,22 @@
+
 const express = require('express');
-const morgan = require('morgan');
-const mongoose = require('mongoose');
-
-const PORT = process.env.PORT || 8000;
-
 const app = express();
+require('dotenv').config();
+const PORT = 8000 || process.env.PORT;
+const mongoose = require('mongoose');
+const router = require('./routes');
+const path = require('path');
 
-app.use(morgan('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.urlencoded( {extended: false } ));
 
-mongoose.connect(process.env.MONGODB_URI || "", { useNewUrlParser: true });
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(router);
 
-app.listen(PORT, () => 
-    console.log(`App is now listening at http://localhost:${PORT}!`))
+mongoose.connect(process.env.MONGO_DB_URI || "mongodb+srv://cluster0.8ks1f.mongodb.net/myFirstData", { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
+}).then( () => {
+    app.listen(PORT);
+    console.log(`App is now listening at http://localhost:${PORT}!`);
+});
