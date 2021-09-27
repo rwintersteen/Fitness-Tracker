@@ -14,6 +14,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(router);
 
 mongoose.connect(process.env.MONGO_DB_URI || "mongodb+srv://cluster0.8ks1f.mongodb.net/myFirstData", { 
+    useNewUrlParser: true,
+    useCreateIndex: true,
     useNewUrlParser: true, 
     useUnifiedTopology: true 
 }).then( () => {

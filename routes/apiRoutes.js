@@ -1,59 +1,53 @@
-const router = require("express").Router();
-const Workout = require("../models/workout.js");
+const express = require('express');
+const router = express.Router();
+const mongoose = require('mongoose');
 
-router.post("/api/workouts", (req, res) => {
-  Workout.create({})
-  .then(dbWorkout => {
-    res.json(dbWorkout);
-  })
-  .catch(err => {
-    res.json(err);
-  });
-});
+const Workout = require('../models');
 
-router.get("/api/workouts", (req, res) => {
+//get workouts
+router.get('/api/workouts', (req, res) => {
   Workout.find()
-  .then(dbWorkouts => {
-    res.json(dbWorkouts);
+  .then(data => {
+      res.json(data)
   })
   .catch(err => {
-    res.json(err);
-  });
-});
-
-router.delete("/api/workouts", ({ body }, res) => {
-  Workout.findByIdAndDelete(body.id)
-  .then(() => {
-    res.json(true);
+      res.json(err)
   })
-  .catch(err => {
-    res.json(err);
-  });
 });
 
-router.get("/api/workouts/range", (req, res) => {
-  Workout.find({})
-  .then(dbWorkouts => {
-    console.log(dbWorkouts)
-    res.json(dbWorkouts);
-  })
-  .catch(err => {
-    res.json(err);
-  });
-});
-
+//get workout by ID
 router.put("/api/workouts/:id", ({ body, params }, res) => {
   Workout.findByIdAndUpdate(
     params.id,
     { $push: { exercises: body } },
     { new: true, runValidators: true }
   )
-  .then(dbWorkout => {
-    res.json(dbWorkout);
+  .then(data => {
+    res.json(data);
   })
   .catch(err => {
     res.json(err);
   });
+});
+
+//get workout in range
+router.get('/api/workouts/range', (req,res) => {
+  Workout.find()
+  .then(data => {
+      res.json(data)
+  })
+  .catch(err => {
+      res.json(err)
+  })
+});
+
+//add workout
+router.post('/api/workouts', (req, res) => {
+  Workout.create({})
+  .then(data => res.json(data))
+  .catch(err => { 
+      res.json(err)
+  })
 });
 
 module.exports = router;
