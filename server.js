@@ -14,7 +14,7 @@ app.use(express.urlencoded( {extended: false } ));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(router);
 
-mongoose.connect(process.env.mongoURI, { 
+mongoose.connect(mongoURI, { 
     useNewUrlParser: true, 
     useUnifiedTopology: true 
 }).then( () => {
