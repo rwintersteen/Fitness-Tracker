@@ -6,28 +6,28 @@ const Workout = require('../models');
 
 //get workouts
 router.get('/api/workouts', (req, res) => {
-  Workout.find()
-  .then(data => {
-      res.json(data)
-  })
-  .catch(err => {
-      res.json(err)
-  })
+    Workout.find()
+    .then(data => {
+        res.json(findWorkouts)
+    })
+    .catch(err => {
+        res.json(err)
+    });
 });
 
 //get workout by ID
 router.put("/api/workouts/:id", ({ body, params }, res) => {
   Workout.findByIdAndUpdate(
-    params.id,
-    { $push: { exercises: body } },
-    { new: true, runValidators: true }
-  )
-  .then(data => {
-    res.json(data);
-  })
-  .catch(err => {
-    res.json(err);
-  });
+      params.id,
+      { $push: { exercises: body } },
+      { new: true, runValidators: true }
+    )
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      res.json(err);
+    })
 });
 
 //get workout in range
